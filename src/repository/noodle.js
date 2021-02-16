@@ -35,6 +35,10 @@ const NoodleLowDBRepository = {
         }).write()))
         db.update('profit', profit => profit + Number((removedNoodle && removedNoodle.price) || 0)).write()
         return removedNoodle
+    },
+    updateNoodle(id, price) {
+        const updatedNoodle = db.get('noodles').find({id}).assign({ price }).write()
+        return updatedNoodle
     }
 }
 

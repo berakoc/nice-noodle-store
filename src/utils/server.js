@@ -11,6 +11,7 @@ module.exports = async (apiVersion = 'v1', options = {}) => {
     app.use(morgan('tiny'))
     app.use(express.json())
     require('dotenv').config()
+    process.env.PORT = process.env.PORT || 8080
     for (const key of Object.keys(options)) {
         process.env[key] = options[key]
     }
@@ -19,7 +20,7 @@ module.exports = async (apiVersion = 'v1', options = {}) => {
         res.send('Noodle API Main Page')
     })
     app.use(`/api/${apiVersion}`, apiController)
-    const { path, specs } = generateConfigs()
+    const { path, specs } = generateConfigs(process.env.PORT)
     apiController.use(path, swaggerUI.serve, swaggerUI.setup(specs, {
         explorer: true,
     }))

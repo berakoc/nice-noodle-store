@@ -31,5 +31,11 @@ module.exports = {
         throwIdNotFoundErrorIfValid(id, noodle)
         serverDebugger(`Sold noodle@${id} and earned ${noodle.price}$`)
         return noodle
+    },
+    updateNoodlePrice(id, price) {
+        const noodle = NoodleLowDBRepository.updateNoodle(id, price)
+        throwIdNotFoundErrorIfValid(id, noodle)
+        serverDebugger(`Updated noodle price to ${noodle.price}$ for noodle@${noodle.id}`)
+        return noodle
     }
 }

@@ -1,6 +1,6 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 
-const generateConfigs = (port = process.env.PORT) => ({
+const generateConfigs = (port) => ({
     path: '/api-docs',
     specs: swaggerJSDoc({
         definition: {

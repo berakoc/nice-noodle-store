@@ -6,7 +6,9 @@
   "scripts": {
     "start": "DEBUG=noodle:* node src/index.js",
     "start:dev": "nodemon src/index.js",
-    "test": "jest"
+    "test": "jest",
+    "activateBashScripts": "chmod +x ./scripts/*.sh",
+    "commitThenPush": "./scripts/commitThenPush.sh"
   },
   "repository": {
     "type": "git",

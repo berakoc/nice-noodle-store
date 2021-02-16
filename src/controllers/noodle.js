@@ -1,4 +1,4 @@
-const { checkNoodle, cookNoodle, sellNoodle, getNoodles, getProfit } = require('../services/noodle')
+const { checkNoodle, cookNoodle, sellNoodle, getNoodles, getProfit, updateNoodlePrice } = require('../services/noodle')
 const noodleController = require('express').Router()
 
 /**
@@ -18,6 +18,16 @@ const noodleController = require('express').Router()
  *                      description: The price of the noodle in dollar currency
  *              example:
  *                  id: l4X9fmbzTVmM
+ *                  price: 12
+ *          Price:
+ *              type: object
+ *              required:
+ *                  - price
+ *              properties:
+ *                  price:
+ *                      type: number
+ *                      description: Price of a noodle
+ *              example:
  *                  price: 12
  *          Profit:
  *              type: object
@@ -103,8 +113,8 @@ noodleController.get('/profit', (req, res) => {
  *                  description: The noodle was not found
  */
 noodleController.get('/:id([A-Za-z0-9_-]{12})', (req, res) => {
-    const noodleId = req.params.id
-    res.send(checkNoodle(noodleId))
+    const { id } = req.params
+    res.send(checkNoodle(id))
 })
 
 /**
@@ -156,8 +166,43 @@ noodleController.post('/', (req, res) => {
  *                  description: The noodle was not found
  */
 noodleController.delete('/:id([A-Za-z0-9_-]{12})', (req, res) => {
-    const noodleId = req.params.id
-    res.send(sellNoodle(noodleId))
+    const { id } = req.params
+    res.send(sellNoodle(id))
+})
+
+/**
+ * @swagger
+ * /noodle/{id}:
+ *      put:
+ *          summary: Updates the noodle's price
+ *          tags: [Noodles]
+ *          parameters:
+ *              - required: true
+ *                description: The id of the noodle
+ *                in: path
+ *                name: id
+ *                schema:
+ *                    type: string
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Price'
+ *          responses:
+ *              200:
+ *                  description: The noodle's price is updated
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Noodle'
+ *              404:
+ *                  description: The noodle was not found
+ */
+noodleController.put('/:id([A-Za-z0-9_-]{12})', (req, res) => {
+    const { id } = req.params
+    const { price } = req.body
+    res.send(updateNoodlePrice(id, price))
 })
 
 module.exports = noodleController
