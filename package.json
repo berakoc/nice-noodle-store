@@ -34,6 +34,7 @@
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
     "debug": "^4.3.1",
     "jest": "^26.6.3",
     "morgan": "^1.10.0",

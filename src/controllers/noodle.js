@@ -128,7 +128,7 @@ noodleController.get('/:id([A-Za-z0-9_-]{12})', (req, res) => {
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Noodle'
+ *                          $ref: '#/components/schemas/Price'
  *          responses:
  *              200:
  *                  description: Newly cooked noodle
@@ -173,7 +173,7 @@ noodleController.delete('/:id([A-Za-z0-9_-]{12})', (req, res) => {
 /**
  * @swagger
  * /noodle/{id}:
- *      put:
+ *      patch:
  *          summary: Updates the noodle's price
  *          tags: [Noodles]
  *          parameters:
@@ -199,7 +199,7 @@ noodleController.delete('/:id([A-Za-z0-9_-]{12})', (req, res) => {
  *              404:
  *                  description: The noodle was not found
  */
-noodleController.put('/:id([A-Za-z0-9_-]{12})', (req, res) => {
+noodleController.patch('/:id([A-Za-z0-9_-]{12})', (req, res) => {
     const { id } = req.params
     const { price } = req.body
     res.send(updateNoodlePrice(id, price))

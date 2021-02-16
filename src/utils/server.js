@@ -2,7 +2,7 @@ const noodleController = require('../controllers/noodle')
 const { generateConfigs } = require('../docs/swagger')
 const swaggerUI = require('swagger-ui-express')
 
-module.exports = async (apiVersion = 'v1', options = {}) => {
+module.exports = (apiVersion = 'v1', options = {}) => {
     const express = require('express')
     const app = express()
     const helmet = require('helmet')
@@ -20,10 +20,12 @@ module.exports = async (apiVersion = 'v1', options = {}) => {
         res.send('Noodle API Main Page')
     })
     app.use(`/api/${apiVersion}`, apiController)
-    const { path, specs } = generateConfigs(process.env.PORT)
-    apiController.use(path, swaggerUI.serve, swaggerUI.setup(specs, {
-        explorer: true,
-    }))
+    if (!process.env.TEST) {
+        const { path, specs } = generateConfigs(process.env.PORT)
+        apiController.use(path, swaggerUI.serve, swaggerUI.setup(specs, {
+            explorer: true,
+        }))
+    }
     apiController.use('/noodle', noodleController)
     app.use(require('./error').defaultErrorHandler)
     return app
